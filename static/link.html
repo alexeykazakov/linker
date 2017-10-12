@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+
+<head>
+</head>
+<html>
+
+<form action="http://localhost:8089/api/token/link" method="POST">
+    <input type="hidden" name="for" value="https://github.com/alexeykazakov-osio/somecoolrepo">
+    <input type="hidden" name="redirect" value="http://localhost:8090/linked.html">
+    <input type="hidden" name="token" id="token" value="">
+    <input type="submit" onclick="fillToken()" value="Link GitHub">
+</form>
+
+<script type="text/javascript">
+    var f = function fillToken() {
+        'use strict';
+
+        var url = new URL(window.location.href);
+        var json = JSON.parse(url.searchParams.get("token_json"));
+        console.log("Token JSON: " + json.access_token);
+
+        document.getElementById("token").value = json.access_token
+        console.log("Token set to form: " + document.getElementById("token").value);
+        return true;
+    }
+    f();
+</script>
+
+</html>
