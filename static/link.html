@@ -4,26 +4,28 @@
 </head>
 <html>
 
-<form action="http://localhost:8089/api/token/link" method="POST">
-    <input type="hidden" name="for" value="https://github.com/alexeykazakov-osio/somecoolrepo">
-    <input type="hidden" name="redirect" value="http://localhost:8090/linked.html">
-    <input type="hidden" name="token" id="token" value="">
-    <input type="submit" onclick="fillToken()" value="Link GitHub">
-</form>
+<button type="button" onclick="linkGitHub()">Link GitHub</button>
 
 <script type="text/javascript">
-    var f = function fillToken() {
+    function linkGitHub() {
         'use strict';
 
         var url = new URL(window.location.href);
         var json = JSON.parse(url.searchParams.get("token_json"));
         console.log("Token JSON: " + json.access_token);
 
-        document.getElementById("token").value = json.access_token
-        console.log("Token set to form: " + document.getElementById("token").value);
-        return true;
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                var locationJSON = JSON.parse(this.responseText);
+                console.log("Redirect location: " + locationJSON.redirect_location);
+                window.location.href = locationJSON.redirect_location;
+            }
+        };
+        xhttp.open("GET", "http://localhost:8089/api/token/link?for=https://github.com&redirect=http://localhost:8090/linked.html", true);
+        xhttp.setRequestHeader("Authorization", "Bearer " + json.access_token);
+        xhttp.send();
     }
-    f();
 </script>
 
 </html>
