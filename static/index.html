@@ -5,6 +5,8 @@
 </head>
 <html>
 
-<input type="button" onclick="location.href='http://localhost:8089/api/login?redirect=http%3A%2F%2Flocalhost%3A8090%2Flink.html';" value="Login" />
+<input type="button" onclick="location.href='http://localhost:8089/api/login?redirect=http%3A%2F%2Flocalhost%3A8090%2Flink.html';" value="Login Local" /><br/>
+<input type="button" onclick="location.href='https://auth.prod-preview.openshift.io/api/login?redirect=http%3A%2F%2Flocalhost%3A8090%2Flink.html';" value="Login Preivew" /><br/>
+<input type="button" onclick="location.href='https://auth.openshift.io/api/login?redirect=http%3A%2F%2Flocalhost%3A8090%2Flink.html';" value="Login Prod" />
 
 </html>

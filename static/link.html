@@ -4,10 +4,18 @@
 </head>
 <html>
 
-<button type="button" onclick="linkGitHub()">Link GitHub</button>
+<button type="button" onclick="linkProvider('http://localhost:8089', 'https://github.com')">Link GitHub Local</button><br/>
+<button type="button" onclick="linkProvider('https://auth.prod-preview.openshift.io', 'https://github.com')">Link GitHub Preview</button><br/>
+<button type="button" onclick="linkProvider('https://auth.openshift.io', 'https://github.com')">Link GitHub Prod</button><br/><br/>
+
+<button type="button" onclick="linkProvider('http://localhost:8089', 'https://api.free-stg.openshift.com')">Link OSO free-stg Local</button><br/>
+<button type="button" onclick="linkProvider('https://auth.prod-preview.openshift.io', 'https://api.free-stg.openshift.com')">Link OSO free-stg Preview</button><br/><br/>
+
+<button type="button" onclick="linkProvider('https://auth.openshift.io', 'https://api.starter-us-east-2.openshift.com')">Link OSO east 2 Prod</button><br/>
+<button type="button" onclick="linkProvider('https://auth.openshift.io', 'https://api.starter-us-east-2a.openshift.com')">Link OSO east 2a Prod</button>
 
 <script type="text/javascript">
-    function linkGitHub() {
+    function linkProvider(authURL, provider) {
         'use strict';
 
         var url = new URL(window.location.href);
@@ -22,7 +30,7 @@
                 window.location.href = locationJSON.redirect_location;
             }
         };
-        xhttp.open("GET", "http://localhost:8089/api/token/link?for=https://github.com&redirect=http://localhost:8090/linked.html", true);
+        xhttp.open("GET", authURL + "/api/token/link?for=" + provider + "&redirect=http://localhost:8090/linked.html", true);
         xhttp.setRequestHeader("Authorization", "Bearer " + json.access_token);
         xhttp.send();
     }
